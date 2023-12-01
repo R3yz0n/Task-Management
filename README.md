@@ -1,12 +1,11 @@
-# React + Vite
+Clone the repository
+install dependencies using npm install
 
-First clone the repository. 
-Go the the project folder.
-npm install
-Open another terminal window to start the json server using command npm run json-server
-Start the react-app using npm run dev
-Then you are good to go. 
-Contact me if any problem arises..
+After successful installation, open another terminal window to start json-server
+npm run json-server
 
+Open another terminal to start the React app using npm run dev
 
+Then you are good to go
 
+Contact if any problem arises
