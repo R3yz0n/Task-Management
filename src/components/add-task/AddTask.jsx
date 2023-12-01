@@ -21,7 +21,10 @@ const AddTask = () => {
     console.log("Status:", status);
 
     //Error if the title is empty
-    if (!title.length) setError("Title cannot be empty");
+    if (!title.length) {
+      setError("Title cannot be empty");
+      return;
+    }
     //using momemnt to get current date
     const currentDate = moment().format("YYYY-MM-DD");
 
