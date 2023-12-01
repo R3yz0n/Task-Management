@@ -5,9 +5,13 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { deleteTask, getAllTasks } from "../../store/task/taskAction";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Task = ({ task, i }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const redirectToUpdatePage = () => navigate(`edit-task/${task.id}`);
 
   const handleDelete = async (id) => {
     try {
@@ -27,6 +31,7 @@ const Task = ({ task, i }) => {
     );
   };
 
+  //   alternate color displaying logic
   const getColorClass = (taskId) => {
     const colorIndex = taskId % 3; // Change 3 to the number of colors you want to cycle through
 
@@ -50,7 +55,7 @@ const Task = ({ task, i }) => {
             task.id
           )}`}
         >
-          {task.id}
+          {i}
         </p>
         {task.title}
       </div>
@@ -64,7 +69,10 @@ const Task = ({ task, i }) => {
         </aside>
 
         <aside className="flex gap-3 text-lg">
-          <FiEdit className="text-blue-600 cursor-pointer hover:opacity-75" />
+          <FiEdit
+            className="text-blue-600 cursor-pointer hover:opacity-75"
+            onClick={redirectToUpdatePage}
+          />
           <RiDeleteBin6Line
             className="text-red-500 cursor-pointer hover:opacity-75"
             onClick={() => handleDelete(task.id)}

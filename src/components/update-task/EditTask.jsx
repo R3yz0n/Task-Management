@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { MdAddToPhotos } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { createTask } from "../../store/task/taskAction";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createTask,
+  getTaskById,
+  updateTask,
+} from "../../store/task/taskAction";
 import moment from "moment";
+import { useParams } from "react-router-dom";
 
-const AddTask = () => {
+const EditTask = () => {
   const [title, setTitle] = useState("");
   const [error, setError] = useState("");
   const [status, setStatus] = useState("pending");
+  const { itemById } = useSelector((state) => state.task);
   const dispatch = useDispatch();
+  const params = useParams();
 
   const handleChange = (e) => {
     setStatus(e.target.value);
@@ -17,36 +24,53 @@ const AddTask = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Title:", title);
-    console.log("Status:", status);
+    if (!title.length) {
+      setError("Title cannot be empty");
+      return;
+    }
 
-    //Error if the title is empty
-    if (!title.length) setError("Title cannot be empty");
-    //using momemnt to get current date
-    const currentDate = moment().format("YYYY-MM-DD");
-
-    const newTask = {
+    const updatedTask = {
       title: title,
       status: status,
-      date: currentDate,
+      date: itemById.date,
+    };
+    const values = {
+      updatedTask: updatedTask,
+      taskId: itemById.id,
     };
 
-    dispatch(createTask(newTask));
+    // Dispatch the action to update the task
+    dispatch(updateTask(values));
     setTitle("");
   };
 
-  useEffect(() => {
-    if (title.length) {
-      setError("");
+  const fetchTaskById = async () => {
+    try {
+      // Dispatch the action to get the task by ID
+      await dispatch(getTaskById(params));
+    } catch (err) {
+      console.error("Error fetching task by ID:", err);
     }
-  }, [title]);
+  };
+
+  useEffect(() => {
+    fetchTaskById();
+  }, []); // Ensure the effect runs only once on mount
+
+  useEffect(() => {
+    if (itemById) {
+      // Update the form fields when itemById changes
+      setTitle(itemById.title);
+      setStatus(itemById.status);
+    }
+  }, [itemById]);
 
   return (
     <div className="h-auto text-red-90 w-full px-2 md:w-4/5 lg:w-3/5 pt-6 pb-3 overflow-hidden md:pl-8  ">
       <header className="items-center text-white flex justify-between mx-auto w-[95%]">
         <h4 className="text-2xl font-semibold flex items-center gap-4 ">
           <MdAddToPhotos className="text-xl sm:text-2xl" />
-          Add New Task
+          Edit Task
         </h4>
       </header>
 
@@ -100,7 +124,7 @@ const AddTask = () => {
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Create Task
+            Update Task
           </button>
         </form>
       </section>
@@ -108,4 +132,4 @@ const AddTask = () => {
   );
 };
 
-export default AddTask;
+export default EditTask;

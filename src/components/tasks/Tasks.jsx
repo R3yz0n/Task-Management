@@ -11,11 +11,14 @@ const Tasks = () => {
   const { items } = useSelector((state) => state.task);
 
   useEffect(() => {
+    //fetching all the task through API getAllTask 's function defination is in the  Actions file
     dispatch(getAllTasks());
   }, []);
   return (
     <div className="h-auto text-red-90 w-full px-2  md:w-4/5 lg:w-3/5   pt-6 pb-3    overflow-y-auto md:px-8   ">
       <TaskHeader />
+
+      {/* mapping all the fetched tasks */}
       <ul className="flex flex-col gap-4  mt-6 ">
         {items.map((task, i) => (
           <Task key={task.id} task={task} i={i} />

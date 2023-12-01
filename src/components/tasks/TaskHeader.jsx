@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const TaskHeader = () => {
   return (
@@ -29,10 +30,14 @@ const TaskHeader = () => {
             </svg>
           </div>
         </div>
-        <button className="bg-[rgb(100,105,245)] text-sm sm:text-base rounded-3xl pl-3 pr-4 sm:pl-4 sm:pr-6 flex items-center gap-2">
+        {/* redirect to the page where user can add task */}
+        <Link
+          to="/add-task"
+          className="bg-[rgb(100,105,245)] text-sm sm:text-base rounded-3xl pl-3 pr-4 sm:pl-4 sm:pr-6 flex items-center gap-2"
+        >
           <span className="font-semibold text-xl sm:text-2xl">+</span>
           <span>Task</span>
-        </button>
+        </Link>
       </section>
     </header>
   );

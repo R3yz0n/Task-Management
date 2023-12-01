@@ -8,6 +8,8 @@ import AddTask from "./components/add-task/AddTask";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Statusbar from "./components/status-bar/Statusbar";
+import EditTask from "./components/update-task/EditTask";
+import ErrorPage from "./components/ErrorPage";
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +19,7 @@ const App = () => {
   };
   return (
     <Wrapper>
+      {/* toast container is used for notification */}
       <ToastContainer />
 
       <main className=" h-full w-full rounded-xl  ">
@@ -26,7 +29,8 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Tasks />} />
             <Route path="/add-task" element={<AddTask />} />
-            {/* <Route path="/reports" component={Reports} /> */}
+            <Route path="/edit-task/:id" element={<EditTask />} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
           <Statusbar />
         </section>
