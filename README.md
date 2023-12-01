@@ -1,7 +1,7 @@
 Clone the repository and
 install dependencies using npm install
 
-After successful installation, open another terminal window to start json-server
+After successful installation, open another terminal window to start json-server using
 npm run json-server
 
 Open another terminal to start the React app using npm run dev
