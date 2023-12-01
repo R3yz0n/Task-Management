@@ -1,4 +1,4 @@
-Clone the repository
+Clone the repository and
 install dependencies using npm install
 
 After successful installation, open another terminal window to start json-server
